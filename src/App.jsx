@@ -93,35 +93,40 @@ function App() {
         <header
           style={{
             top: 0,
-            position: 'sticky',
+            position: 'fixed',
             zIndex: 1000,
-            width: '100%',
-            maxHeight: '100px',
+            maxHeight: '70px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
           }}
         >
           <h1>Todo?!</h1>
           <button onClick={toggleTheme}>Toggle Theme</button>
         </header>
 
-        <GetWeather />
-        <div
+        <main
           style={{
-            justifyContent: 'center',
-            textAlign: 'center',
+            marginTop: '70px',
           }}
         >
+          <GetWeather />
           <div
             style={{
               justifyContent: 'center',
               textAlign: 'center',
             }}
           >
-            <TodoList />
+            <div
+              style={{
+                justifyContent: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <TodoList />
+            </div>
           </div>
-        </div>
+        </main>
       </ThemeProvider>
     </>
   );

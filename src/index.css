@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: #1d1515de;
-  background-color: #e0e0e0;
+  background-color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -74,4 +74,14 @@ button:focus-visible {
 }
 
 header {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(252, 83, 16, 0.18);
+  width: inherit;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 auto;
 }

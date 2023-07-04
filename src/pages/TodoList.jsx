@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import { useLocalStorage } from '@mantine/hooks';
-
 const TodoList = () => {
   const [todos, setTodos] = useLocalStorage({
     key: 'todos',
@@ -86,7 +85,7 @@ const TodoList = () => {
     setDialogOpen(false);
   };
 
-  const InlineTodoComponent = ({ todo }) => {
+  const InlineTodoActions = ({ todo }) => {
     // Reusable component for inline todo actions
     return (
       <>
@@ -117,12 +116,21 @@ const TodoList = () => {
         <h3>Available Todos</h3>
         {availableTodos?.map((todo) => (
           <ListItem key={todo.id}>
-            <ListItemText primary={todo.title} secondary={todo.description} />
-            <InlineTodoComponent todo={todo} />
+            <ListItemText
+              primary={todo.title}
+              secondary={
+                <>
+                  <div>{todo.description}</div>
+                  <i>created At: {new Date(todo.createdAt).toLocaleString()}</i>
+                </>
+              }
+            />
+            <InlineTodoActions todo={todo} />
           </ListItem>
         ))}
       </List>
 
+      {/* Dialog for editing the todo note */}
       <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)}>
         {selectedTodo && (
           <Card>
@@ -175,6 +183,7 @@ const TodoList = () => {
           </Card>
         )}
       </Dialog>
+
       <Card
         sx={{ maxWidth: 400 }}
         style={{ margin: 'auto', marginTop: '20px' }}
@@ -202,32 +211,36 @@ const TodoList = () => {
       </Card>
 
       <hr />
-      {checkedTodos.length > 0 && (
-        <List>
-          <h3>Checked Todos</h3>
-          {checkedTodos?.map((todo) => (
-            <ListItem key={todo.id}>
-              <ListItemText
-                primary={todo.title}
-                secondary={
-                  <>
-                    <div>{todo.description}</div>
-                    <div>
-                      Finished At: {new Date(todo.finishedAt).toLocaleString()}
-                    </div>
-                  </>
-                }
-                primaryTypographyProps={{
-                  style: {
-                    textDecoration: todo.checked ? 'line-through' : 'none', // Add line-through style for checked items
-                  },
-                }}
-              />
-              <InlineTodoComponent todo={todo} />
-            </ListItem>
-          ))}
-        </List>
-      )}
+
+      <section>
+        {checkedTodos.length > 0 && (
+          <List>
+            <h3>Checked Todos</h3>
+            {checkedTodos?.map((todo) => (
+              <ListItem key={todo.id}>
+                <ListItemText
+                  primary={todo.title}
+                  secondary={
+                    <>
+                      <div>{todo.description}</div>
+                      <i>
+                        Finished At:{' '}
+                        {new Date(todo.finishedAt).toLocaleString()}
+                      </i>
+                    </>
+                  }
+                  primaryTypographyProps={{
+                    style: {
+                      textDecoration: todo.checked ? 'line-through' : 'none', // Add line-through style for checked items
+                    },
+                  }}
+                />
+                <InlineTodoActions todo={todo} />
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </section>
 
       {archivedTodos.length > 0 && (
         <Accordion variant="elevation">
